@@ -14,6 +14,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace EventApplication
 {
@@ -41,6 +44,7 @@ namespace EventApplication
                 {
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                  }));
+            services.AddDirectoryBrowser();
 
             services.AddScoped<IEventRepository, EventRepository>();
         }
@@ -50,6 +54,13 @@ namespace EventApplication
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            app.UseStaticFiles();
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "EventImages")),
+                RequestPath = new PathString("/EventImages")
+            });
             app.UseCors("AllowCors");
             app.UseMvc();
         }

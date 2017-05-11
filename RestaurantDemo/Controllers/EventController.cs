@@ -9,6 +9,7 @@ using EventApplication.Repository;
 using EventApplication.ViewModels;
 using System.IO;
 
+
 namespace EventApplication.Controllers
 {
     [Produces("application/json")]
@@ -31,8 +32,8 @@ namespace EventApplication.Controllers
                 EventModel model = new EventModel();
                 model.EventId = e.EventId;
                 model.EventName = e.Name;
-                string path = $"{Directory.GetCurrentDirectory()}{@"\EventImages\"}";
-                model.ImageName = path + e.EventImages.FirstOrDefault().ImagePath;
+               // string path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\EventImages\"}";
+                model.ImageName = e.EventImages.FirstOrDefault().ImagePath;
                 model.StartDate = e.EventDates.FirstOrDefault().StartDate;
                 model.EndDate = e.EventDates.LastOrDefault().EndDate;
                 model.TotalParticipant = e.EventDates.Select(p=>p.EventDateParticipants).Count();
