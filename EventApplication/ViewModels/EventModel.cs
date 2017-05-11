@@ -12,6 +12,5 @@ namespace EventApplication.ViewModels
         public DateTime StartDate { get; set; }
         public DateTime EndDate{ get; set; }
         public int TotalParticipant { get; set; }
-        public string EventName { get; set; }
     }
 }
